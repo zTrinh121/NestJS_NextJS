@@ -10,3 +10,13 @@ export const hashPasswordHelper = async (plainPassword: string): Promise<string>
         
     }
 };
+
+export const comaprePasswordHelper = async (plainPassword: string, hashPassword: string): Promise<string> => {
+    try {
+        return await bcrypt.compare(plainPassword, hashPassword);
+    } catch (error) {
+        console.error('Error hashing password:', error);
+        throw new Error('Error hashing password');
+        
+    }
+};
