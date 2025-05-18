@@ -7,19 +7,22 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
   constructor(
     private usersService: UsersService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
-  async signIn(username: string, pass: string): Promise<any> {
+  async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.finndByEmail(username);
-     
     const isValidPassword = await comaprePasswordHelper(pass, user.password);
-    if (!isValidPassword) {
-      throw new UnauthorizedException("Username or password is incorrect");
-    }
-    const payload = { sub: user._id, username: user.email };
+
+    if (!user || !isValidPassword) return null;
+
+    return user;
+  }
+
+  async login(user: any) {
+    const payload = { username: user.email, sub: user._id };
     return {
       access_token: this.jwtService.sign(payload),
-    }
+    };
   }
 }
