@@ -6,6 +6,9 @@ import { User } from './schemas/user.schema';
 import { Model } from 'mongoose';
 import { hashPasswordHelper } from '@/helpers/util';
 import aqp from 'api-query-params';
+import { CreateAuthDto } from '@/auth/dto/create-auth.dto';
+import { v4 as uuidv4 } from 'uuid';
+import dayjs from 'dayjs';
 
 @Injectable()
 export class UsersService {
@@ -69,7 +72,33 @@ export class UsersService {
     return `This action removes a #${id} user`;
   }
 
-  async finndByEmail(email: string) {
+  async findByEmail(email: string) {
     return await this.userModel.findOne({email});
+  }
+
+  async handleRegister(registerDto: CreateAuthDto) {
+    const { name, email, password } = registerDto;
+    // Check if email already exists
+    const isEmailExist = await this.isEmailExist(email);
+    if (isEmailExist) {
+      throw new BadRequestException(`Email ${email} already exists. Please use another email.`);
+    }
+
+    // Hash password
+    const hashPassword = await hashPasswordHelper(password);
+    
+    // Create new user
+    const newUser = await this.userModel.create({
+      ...registerDto,
+      isActive: false,
+      codeId: uuidv4(),
+      codeExpired: dayjs().add(1, 'day').toDate(),
+      password: hashPassword,
+    });
+
+    return {
+      id: newUser._id,
+      message: 'User registered successfully',
+    };
   }
 }
