@@ -1,9 +1,12 @@
-import React from 'react'
+import { Header } from "antd/es/layout/layout";
+import React from "react";
 
 const AdminHeader = () => {
   return (
-    <div>AdminHeader</div>
-  )
-}
+    <>
+      <Header style={{ padding: 0, background: "#ccc" }} />
+    </>
+  );
+};
 
-export default AdminHeader
+export default AdminHeader;

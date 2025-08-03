@@ -6,7 +6,7 @@ const AdminFooter = () => {
     const { Footer } = Layout;
   return (
     <Footer style={{ textAlign: "center" }}>
-      Trinh ©{new Date().getFullYear()} Created by Ant UED
+      Trinh ©{new Date().getFullYear()} Created by @trinhntm
     </Footer>
   );
 };
