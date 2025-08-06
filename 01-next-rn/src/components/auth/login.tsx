@@ -2,11 +2,25 @@
 import { Button, Col, Divider, Form, Input, Row } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import Link from 'next/link';
+import { signIn } from "next-auth/react"
+import { authenticate } from '@/utils/action';
 
 const Login = () => {
 
     const onFinish = async (values: any) => {
+        console.log('Success:', values);
+        const { email, password } = values;
 
+        // const data = await signIn("credentials", {
+        //     email,
+        //     password, 
+        //     redirect: false
+        // });
+
+        // console.log(" >> check data: ", data);
+
+        const res = await authenticate(email, password);
+        console.log(">> res: ", res)
     };
 
     return (
