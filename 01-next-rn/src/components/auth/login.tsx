@@ -8,17 +8,8 @@ import { authenticate } from '@/utils/action';
 const Login = () => {
 
     const onFinish = async (values: any) => {
-        console.log('Success:', values);
         const { email, password } = values;
-
-        // const data = await signIn("credentials", {
-        //     email,
-        //     password, 
-        //     redirect: false
-        // });
-
-        // console.log(" >> check data: ", data);
-
+        console.log(">> onFinish values: ", values);
         const res = await authenticate(email, password);
         console.log(">> res: ", res)
     };
