@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { LocalAuthGuard } from './passport/local-auth.guard';
+import { JsonAuthGuard } from './passport/json-auth.guard';
 import { JwtAuthGuard } from './passport/jwt-auth.guard';
 import { Public } from '@/decorator/customize';
 import { CreateAuthDto } from './dto/create-auth.dto';
@@ -25,7 +25,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JsonAuthGuard)
   @Public()
   handleLogin(@Request() req) {
     return this.authService.login(req.user);

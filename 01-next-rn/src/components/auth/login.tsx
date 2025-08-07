@@ -9,7 +9,6 @@ const Login = () => {
 
     const onFinish = async (values: any) => {
         const { email, password } = values;
-        console.log(">> onFinish values: ", values);
         const res = await authenticate(email, password);
         console.log(">> res: ", res)
     };
